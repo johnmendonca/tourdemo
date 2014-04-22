@@ -1,5 +1,7 @@
 Tourdemo::Application.routes.draw do
   resources :tours
+  match 'thanks' => 'tours#thanks'
+  root :to => "tours#new"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

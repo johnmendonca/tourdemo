@@ -1,0 +1,14 @@
+<h1>Tell Us About Yourself</h1>
+
+<%= form_for @tour do |f| %>
+  <%= f.label :first_name %>
+  <%= f.text_field :first_name %><br>
+
+  <%= f.label :last_name %>
+  <%= f.text_field :last_name %><br>
+
+  <%= f.label :phone %>
+  <%= f.phone_field :phone %><br>
+
+  <%= f.submit %>
+<% end  %>
