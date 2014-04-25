@@ -6,7 +6,6 @@ gem 'rails', '3.0.20'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'sqlite3'
-gem 'rspec'
 
 # Use unicorn as the web server
 # gem 'unicorn'
@@ -27,6 +26,6 @@ gem 'rspec'
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators
 # and rake tasks are available in development mode:
-# group :development, :test do
-#   gem 'webrat'
-# end
+group :development, :test do
+  gem 'rspec-rails'
+end

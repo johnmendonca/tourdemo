@@ -14,7 +14,7 @@
 ActiveRecord::Schema.define(:version => 20140418224132) do
 
   create_table "tours", :force => true do |t|
-    t.string   "uuid"
+    t.string   "token"
     t.integer  "state"
     t.string   "email"
     t.string   "first_name"

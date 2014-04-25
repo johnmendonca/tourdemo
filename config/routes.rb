@@ -1,5 +1,5 @@
 Tourdemo::Application.routes.draw do
-  resources :tours
+  resources :tours #, :constraints => { :id => /[0-9a-f]{8}/ }
   match 'thanks' => 'tours#thanks'
   root :to => "tours#new"
 

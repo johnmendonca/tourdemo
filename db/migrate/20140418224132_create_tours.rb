@@ -2,7 +2,7 @@ class CreateTours < ActiveRecord::Migration
   def self.up
     create_table :tours do |t|
       t.integer :id
-      t.string :uuid
+      t.string :token
       t.integer :state
       t.string :email
       t.string :first_name
