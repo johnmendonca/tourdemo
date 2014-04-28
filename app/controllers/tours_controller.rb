@@ -7,8 +7,8 @@ class ToursController < ApplicationController
     @tour = Tour.new(params[:tour].slice(:email))
     if @tour.save
       #send email
-      flash[:notice] = tour_url(@tour)
-      redirect_to('/thanks')
+      flash[:notice] = "<a href=\"#{tour_url(@tour)}\">#{tour_url(@tour)}</a>".html_safe
+      redirect_to '/thanks'
     else
       flash[:error] = "Put a better email address please"
       redirect_to new_tour_path
@@ -28,6 +28,10 @@ class ToursController < ApplicationController
 
   def update
     @tour = Tour.find_by_token(params[:id])
+    unless @tour.update_attributes params[:tour].slice(*@tour.fields_to_update)
+      flash[:error] = "Please enter valid info for each field"
+    end
+    redirect_to tour_path(@tour)
   end
 
   def thanks

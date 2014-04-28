@@ -1,5 +1,6 @@
 class Tour < ActiveRecord::Base
   STATES = { :initial => 0, :requested => 1, :basic_info => 2, :extra_info => 3, :rated => 4 }
+  FIELDS = [ [:email], [:first_name, :last_name, :phone], [:date, :location, :amenities], [:rating], nil ]
   STATES.keys.each do |key|
     define_method("#{key}?") do
       self.state >= STATES[key]
@@ -10,19 +11,29 @@ class Tour < ActiveRecord::Base
     protected "#{key}!".to_sym
   end
 
+  def self.valid_amenities
+    ["pool", "rec room", "movie theater", "on site doctor", "time machine"]
+  end
+  serialize :amenities, Array
+
   attr_accessible :email, :first_name, :last_name, :phone, :date, :location, :amenities, :rating
 
   validates :email, :presence => true, :format => /@/
   validates :first_name, :last_name, :phone, :presence => true, :if => :requested?
   validates :date, :location, :amenities, :presence => true, :if => :basic_info?
+  # validates :amenities, :inclusion => { :in => valid_amenities }, :if => :basic_info?
   validates :rating, :presence => true, :if => :extra_info?
 
-  after_initialize { self.state = 0 }
+  after_initialize :initial!, :if => :new_record?
   before_save :update_state
   before_create :generate_token
 
   def to_param
     self.token
+  end
+
+  def fields_to_update
+    FIELDS[self.state]
   end
 
   protected

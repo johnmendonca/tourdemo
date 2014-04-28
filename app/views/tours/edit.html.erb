@@ -1,6 +1,6 @@
-<h1>Tell Us About Yourself</h1>
-
 <%= form_for @tour do |f| %>
+  <h1>Tell Us About Yourself</h1>
+
   <%= f.label :first_name %>
   <%= f.text_field :first_name %><br>
 
@@ -11,4 +11,19 @@
   <%= f.phone_field :phone %><br>
 
   <%= f.submit %>
-<% end  %>
+<% end unless @tour.basic_info? %>
+
+<%= form_for @tour do |f| %>
+  <h1>What You Want To Do?</h1>
+
+  <%= f.label :date %>
+  <%= f.text_field :date %><br>
+
+  <%= f.label :location %>
+  <%= f.text_field :location %><br>
+
+  <%= f.label :amenities %>
+  <%= f.select :amenities, options_for_select(Tour.valid_amenities), {}, :multiple => 'multiple' %><br>
+
+  <%= f.submit %>
+<% end if @tour.basic_info? && !@tour.extra_info? %>

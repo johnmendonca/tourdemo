@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(:version => 20140418224132) do
     t.date     "date"
     t.string   "location"
     t.string   "amenities"
+    t.integer  "rating"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

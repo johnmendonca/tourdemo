@@ -11,6 +11,7 @@ class CreateTours < ActiveRecord::Migration
       t.date :date
       t.string :location
       t.string :amenities
+      t.integer :rating
       t.timestamps
     end
   end
