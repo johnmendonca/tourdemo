@@ -1,6 +1,6 @@
 class Tour < ActiveRecord::Base
   STATES = { :initial => 0, :requested => 1, :basic_info => 2, :extra_info => 3, :rated => 4 }
-  FIELDS = [ [:email], [:first_name, :last_name, :phone], [:date, :location, :amenities], [:rating], nil ]
+  FIELDS = [ [:email], [:first_name, :last_name, :phone], [:date, :location, :amenities], [:rating] ]
   STATES.keys.each do |key|
     define_method("#{key}?") do
       self.state >= STATES[key]
@@ -18,11 +18,12 @@ class Tour < ActiveRecord::Base
 
   attr_accessible :email, :first_name, :last_name, :phone, :date, :location, :amenities, :rating
 
-  validates :email, :presence => true, :format => /@/
+  validates :email, :presence => true, :format => /@.+[.].+/
   validates :first_name, :last_name, :phone, :presence => true, :if => :requested?
-  validates :date, :location, :amenities, :presence => true, :if => :basic_info?
-  # validates :amenities, :inclusion => { :in => valid_amenities }, :if => :basic_info?
-  validates :rating, :presence => true, :if => :extra_info?
+  validates :phone, :format => /^\D*(?:\d\D*){10}$/, :if => :requested?
+  validates :date, :location, :presence => true, :if => :basic_info?
+  validate :amenities_are_valid, :if => :basic_info?
+  validates :rating, :presence => true, :inclusion => { :in => 1..5 }, :if => :extra_info?
 
   after_initialize :initial!, :if => :new_record?
   before_save :update_state
@@ -46,5 +47,11 @@ class Tour < ActiveRecord::Base
       random_token = SecureRandom.hex(4)
       break random_token unless Tour.exists?(:token => random_token)
     end
+  end
+
+  def amenities_are_valid
+    self.amenities.each do |a|
+      errors.add(:amenities, "#{a} is not a valid amenity") unless Tour.valid_amenities.include?(a)
+    end unless self.amenities.blank?
   end
 end

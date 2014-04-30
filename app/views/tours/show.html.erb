@@ -1,14 +1,17 @@
 <h1>Tour Life</h1>
 
-<% for attribute in [:email, :first_name, :last_name, :phone, :date, :location, :amenities, :rating] %>
-  <p><b><%= attribute.to_s.humanize %>:</b> <%= @tour.attributes[attribute.to_s].to_s %></p>
+<% [:email, :first_name, :last_name, :phone, :date, :location, :amenities, :rating].each do |a| %>
+  <% a = a.to_s %>
+  <% if @tour.attributes[a] %>
+    <p><b><%= a.humanize %>:</b> <%= clean_array_str(@tour.attributes[a].to_s) %></p>
+  <% end %>
 <% end %>
 
 <%= form_for @tour do |f| %>
   <h1>How was it?</h1>
 
   <%= f.label :rating %>
-  <%= f.text_field :rating %><br>
+  <%= f.select :rating, options_for_select(1..5) %><br>
 
   <%= f.submit %>
 <% end unless @tour.rating? %>

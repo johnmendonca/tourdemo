@@ -1,6 +1,7 @@
 Tourdemo::Application.routes.draw do
-  resources :tours #, :constraints => { :id => /[0-9a-f]{8}/ }
+  resources :tours, :except => :destroy, :constraints => { :id => /[0-9a-f]{8}/ }
   match 'thanks' => 'tours#thanks'
+  match 'success' => 'tours#success'
   root :to => "tours#new"
 
   # The priority is based upon order of creation:

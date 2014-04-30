@@ -1,0 +1,6 @@
+A New Tour was Scheduled!
+
+<% for attribute in [:email, :first_name, :last_name, :phone, :date, :location, :amenities, :rating] %>
+  <%= attribute.to_s.humanize %>: <%= @tour.attributes[attribute.to_s].to_s %>
+<% end %>
+  Request IP Address: <%= @ip %>

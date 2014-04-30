@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <p>A New Tour was Scheduled</p>
+
+  <% for attribute in [:email, :first_name, :last_name, :phone, :date, :location, :amenities, :rating] %>
+    <p><b><%= attribute.to_s.humanize %>:</b> <%= @tour.attributes[attribute.to_s].to_s %></p>
+  <% end %>
+    <p><b>Request IP:</b> <%= @ip %></p>
+  </body>
+</html>
