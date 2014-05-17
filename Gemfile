@@ -29,4 +29,5 @@ gem 'sqlite3'
 group :development, :test do
   gem 'rspec-rails'
   gem 'capybara'
+  gem 'accept_values_for'
 end
