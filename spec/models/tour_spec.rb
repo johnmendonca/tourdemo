@@ -29,6 +29,7 @@ describe Tour do
     it { should be_invalid }
     it { should be_requested }
     it { should_not be_basic_info }
+    its(:token) { should match(/[a-f0-9]{8}/) }
 
     context "with basic info input" do
       before(:each) do
