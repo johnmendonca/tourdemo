@@ -10,7 +10,7 @@ class ToursController < ApplicationController
       #flash[:notice] = "Shortcut: <a href=\"#{tour_url(@tour)}\">#{tour_url(@tour)}</a>".html_safe
       redirect_to '/thanks'
     else
-      flash[:error] = errors_display(@tour)
+      flash[:error] = view_context.errors_display(@tour)
       redirect_to new_tour_path
     end
   end
@@ -30,7 +30,7 @@ class ToursController < ApplicationController
     final_form = @tour.basic_info? && !@tour.extra_info?
 
     unless @tour.update_attributes params[:tour].slice(*@tour.fields_to_update)
-      flash[:error] = errors_display(@tour)
+      flash[:error] = view_context.errors_display(@tour)
       return redirect_to edit_tour_path(@tour)
     end
     
@@ -41,25 +41,5 @@ class ToursController < ApplicationController
       return redirect_to '/success'
     end
     redirect_to tour_path(@tour)
-  end
-
-  def thanks
-    @info = "Thanks for signing up"
-    render :info
-  end
-
-  def success
-    @info = "You've successfully signed up for a tour.  Get ready!"
-    render :info
-  end
-
-  protected
-  def errors_display(model)
-    all_errors = "Please correct the following:<br><ul>"
-    model.errors.full_messages.each do |e|
-      all_errors << "<li>#{e}</li>" 
-    end
-    all_errors << "</ul>"
-    return all_errors.html_safe
   end
 end
