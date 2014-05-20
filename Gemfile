@@ -29,5 +29,6 @@ gem 'sqlite3'
 group :development, :test do
   gem 'rspec-rails'
   gem 'capybara'
+  gem 'capybara-email'
   gem 'accept_values_for'
 end

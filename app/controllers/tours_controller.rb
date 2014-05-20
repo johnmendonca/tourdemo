@@ -1,4 +1,8 @@
 class ToursController < ApplicationController
+  def index
+    redirect_to new_tour_path
+  end
+
   def new
     @tour = Tour.new
   end
