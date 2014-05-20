@@ -1,5 +1,5 @@
 ## Installation
-clone the repo
-bundle install
-rake db:migrate
-rails server
+ * clone the repo
+ * bundle install
+ * rake db:migrate
+ * rails server
